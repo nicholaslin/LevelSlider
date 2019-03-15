@@ -8,33 +8,33 @@
 
 import UIKit
 
-protocol NICLevelSliderDelegate: AnyObject {
+public protocol NICLevelSliderDelegate: AnyObject {
     func levleSlider(_ levelSlider:NICLevelSlider, didSwitchToLevel level:Int)
 }
 
-class NICLevelSlider: UIView {
+open class NICLevelSlider: UIView {
     
     //support Gradient color
-    public var minimumTrackTintColor: [UIColor] = 
+    open var minimumTrackTintColor: [UIColor] = 
         [UIColor(red: 0x28/255.0, green: 0xAD/255.0, blue: 0xFF/255.0, alpha: 1.0),
          UIColor(red: 0x10/255.0, green: 0x5C/255.0, blue: 0xFE/255.0, alpha: 1.0)]
     
-    public var maximumTrackTintColor: UIColor = 
+    open var maximumTrackTintColor: UIColor = 
         UIColor(red: 0xD5/255.0, green: 0xD8/255.0, blue: 0xDF/255.0, alpha: 1.0)
     
-    public var lineMargin: CGFloat = 16.0 {
+    open var lineMargin: CGFloat = 16.0 {
         didSet{
             updateSliderConstraints()
         }
     }
     
-    public var circleDotRadius: CGFloat = 3.0 {
+    open var circleDotRadius: CGFloat = 3.0 {
         didSet{
             updateSliderConstraints()
         }
     }
     
-    public var thumbImage: UIImage? {
+    open var thumbImage: UIImage? {
         didSet{
             if thumbImage != nil {
                 
@@ -45,11 +45,11 @@ class NICLevelSlider: UIView {
         }
     }
     
-    public var lineWidth: CGFloat = 2.0
+    open var lineWidth: CGFloat = 2.0
     
-    public var level: Int = 4
+    open var level: Int = 4
     
-    public var currentLevel: Int = 1 {
+    private(set) open var currentLevel: Int = 1 {
         didSet{
             if oldValue != currentLevel {
                 delegate?.levleSlider(self, didSwitchToLevel: currentLevel)
@@ -57,7 +57,7 @@ class NICLevelSlider: UIView {
         }
     }
     
-    public weak var delegate: NICLevelSliderDelegate?
+    private weak var delegate: NICLevelSliderDelegate?
     
     private var sliderValue: Float = 0 {
         didSet{
@@ -118,7 +118,7 @@ class NICLevelSlider: UIView {
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         // Drawing code
         super.draw(rect)
         drawGradientLayer()
@@ -131,7 +131,7 @@ class NICLevelSlider: UIView {
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
