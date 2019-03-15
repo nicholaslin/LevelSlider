@@ -126,7 +126,7 @@ open class NICLevelSlider: UIView {
         updateSliderValue(value: Float(currentLevel - 1)/Float(level - 1), animated: false)
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
@@ -143,12 +143,12 @@ open class NICLevelSlider: UIView {
         
     }
     
-    func initSubviews() {
+    private func initSubviews() {
         addSubview(slider)
         addConstraints(sliderConstraints)
     }
     
-    func setup() {
+    private func setup() {
         initSubviews()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
     }
