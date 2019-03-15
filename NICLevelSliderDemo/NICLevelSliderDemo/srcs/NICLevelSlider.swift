@@ -47,17 +47,17 @@ open class NICLevelSlider: UIView {
     
     open var lineWidth: CGFloat = 2.0
     
-    open var level: Int = 4
+    open var numOfLevels: Int = 4
     
-    private(set) open var currentLevel: Int = 1 {
+    open weak var delegate: NICLevelSliderDelegate?
+    
+    private var currentLevel: Int = 1 {
         didSet{
             if oldValue != currentLevel {
                 delegate?.levleSlider(self, didSwitchToLevel: currentLevel)
             }
         }
     }
-    
-    private weak var delegate: NICLevelSliderDelegate?
     
     private var sliderValue: Float = 0 {
         didSet{
@@ -123,10 +123,17 @@ open class NICLevelSlider: UIView {
         super.draw(rect)
         drawGradientLayer()
         drawlineLayer()       
-        updateSliderValue(value: Float(currentLevel - 1)/Float(level - 1), animated: false)
+        updateSliderValue(value: Float(currentLevel - 1)/Float(numOfLevels - 1), animated: false)
     }
     
-    override public init(frame: CGRect) {
+    convenience public init(frame: CGRect, numOfLevels: Int, initialLevel: Int) {
+
+        self.init(frame: frame)
+        self.numOfLevels = numOfLevels
+        self.currentLevel = initialLevel
+    }
+    
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
@@ -197,9 +204,9 @@ open class NICLevelSlider: UIView {
         path.addLine(to: CGPoint(x: lLayer.bounds.width - (circleDotRadius), y: center_y))
         
         //draw circle
-        let w = (lLayer.frame.width - 2 * circleDotRadius) / CGFloat(level-1)
+        let w = (lLayer.frame.width - 2 * circleDotRadius) / CGFloat(numOfLevels-1)
         
-        for i in 0..<level {
+        for i in 0..<numOfLevels {
             
             path.addArc(withCenter: CGPoint(x: circleDotRadius + (CGFloat(i) * w), y: center_y), radius: circleDotRadius, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: true)
             
@@ -230,7 +237,7 @@ open class NICLevelSlider: UIView {
     
     private func updateSliderValue(value: Float, animated: Bool = true) {
         
-        let ava = 1.0 / Float(level-1)
+        let ava = 1.0 / Float(numOfLevels-1)
         let half = ava / 2
         let targetValue:Float
         if value.truncatingRemainder(dividingBy: ava) < half {
