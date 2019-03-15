@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "NICLevelSlider"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "A Level Slider for iOS, written in Swift."
   s.homepage     = "https://github.com/nicholaslin/LevelSlider"
   s.license     = { :type => 'MIT', :file => 'LICENSE' }
